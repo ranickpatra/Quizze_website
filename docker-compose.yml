@@ -1,0 +1,39 @@
+version: "3.0"
+
+services:
+    php_server:
+        depends_on: 
+            - db
+        image: php:7.2-apache
+        ports:
+            - 80:80
+        volumes: 
+            - ./src:/var/www/html
+        networks: 
+            - php_network
+    
+    phpmyadmin:
+        depends_on: 
+            - db
+        container_name: pp
+        image: phpmyadmin/phpmyadmin
+        ports:
+            - 8080:80
+        environment:
+            PMA_HOST: db
+        networks: 
+            - php_network
+    db:
+        image: mysql:5.7
+        ports: 
+            - 3306:3306
+        environment:
+            MYSQL_ROOT_PASSWORD: toor
+            MYSQL_DATABASE: db_01
+            MYSQL_USER: usr1
+            MYSQL_PASSWORD: 1234
+        networks: 
+            - php_network
+
+networks:
+    php_network:
