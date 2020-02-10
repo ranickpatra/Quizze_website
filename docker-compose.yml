@@ -4,7 +4,12 @@ services:
     php_server:
         depends_on: 
             - db
-        image: php:7.2-apache
+        # image: php:7.2-apache
+        build: 
+            context: .
+            dockerfile: ./php_dockerfile
+        image: myphp:1.0
+
         ports:
             - 80:80
         volumes: 
